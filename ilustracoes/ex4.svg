@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><style>
+.b{stroke:#1d2430;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.r{stroke:#e0662b;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.l{stroke:#3a6ea5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.f{stroke:#9aa7b5;stroke-width:3}.c{stroke:#6d5a44;stroke-width:6;stroke-linecap:round}
+.g{stroke:#2e7d4f;stroke-width:3;fill:none;stroke-linecap:round}.hd{fill:#1d2430}.pz{fill:#e53935}
+.a{animation-duration:6s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes pu{0%,100%{opacity:.08}35%,70%{opacity:.42}}
+@media (prefers-reduced-motion:reduce){*{animation-play-state:paused!important;animation-delay:-3s!important}}
+.a{animation-duration:7s}.tr{transform-origin:160px 141px;animation-name:up}@keyframes up{0%,100%{transform:rotate(0)}35%,70%{transform:rotate(22deg)}}.ua{transform-origin:66px 140px;animation-name:ua}@keyframes ua{0%,100%{transform:rotate(102.5deg)}35%,70%{transform:rotate(0)}}.fa{transform-origin:81.7px 179px;animation-name:fa}@keyframes fa{0%,100%{transform:rotate(-80.5deg)}35%,70%{transform:rotate(0)}}</style><line class="f" x1="0" y1="152" x2="320" y2="152"/>
+<line class="l" stroke-width="14" x1="158" y1="141" x2="300" y2="143"/>
+<line class="r" stroke-width="14" x1="160" y1="142" x2="302" y2="145"/>
+<g class="tr a"><line class="b" stroke-width="24" x1="66" y1="140" x2="160" y2="141"/><circle class="hd" cx="44" cy="132" r="15"/>
+<g class="ua a"><line class="b" stroke-width="10" x1="66" y1="140" x2="81.7" y2="179"/>
+<g class="fa a"><line class="b" stroke-width="10" x1="81.7" y1="179" x2="54" y2="190.2"/></g></g></g></svg>

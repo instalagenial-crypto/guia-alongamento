@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><style>
+.b{stroke:#1d2430;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.r{stroke:#e0662b;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.l{stroke:#3a6ea5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.f{stroke:#9aa7b5;stroke-width:3}.c{stroke:#6d5a44;stroke-width:6;stroke-linecap:round}
+.g{stroke:#2e7d4f;stroke-width:3;fill:none;stroke-linecap:round}.hd{fill:#1d2430}.pz{fill:#e53935}
+.a{animation-duration:6s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+@keyframes pu{0%,100%{opacity:.08}35%,70%{opacity:.42}}
+@media (prefers-reduced-motion:reduce){*{animation-play-state:paused!important;animation-delay:-3s!important}}
+.a{animation-duration:7s}.tr{transform-origin:62px 138px;animation-name:tr}@keyframes tr{0%,100%{transform:rotate(0)}28%,71%{transform:rotate(-22.5deg)}}.th{transform-origin:150px 139px;animation-name:th}@keyframes th{0%,100%{transform:rotate(0)}28%,71%{transform:rotate(53.5deg)}}.sh{transform-origin:196px 104px;animation-name:sh}@keyframes sh{0%,100%{transform:rotate(0)}28%,71%{transform:rotate(-24.4deg)}}.g{animation-name:ga}@keyframes ga{0%,100%{opacity:0}10%,28%{opacity:1}35%{opacity:0}}</style><line class="f" x1="0" y1="150" x2="320" y2="150"/>
+<line class="b" stroke-width="10" x1="76" y1="144" x2="132" y2="146"/>
+<g class="tr a">
+<g transform="translate(-4 0)"><g class="th a"><line class="l" stroke-width="14" x1="150" y1="139" x2="196" y2="104"/><g class="sh a"><line class="l" stroke-width="13" x1="196" y1="104" x2="214" y2="148"/></g></g></g>
+<line class="b" stroke-width="24" x1="62" y1="138" x2="150" y2="139"/>
+<circle class="pz" cx="150" cy="140" r="16" opacity=".3"/>
+<g class="th a"><line class="r" stroke-width="14" x1="150" y1="139" x2="196" y2="104"/><g class="sh a"><line class="r" stroke-width="13" x1="196" y1="104" x2="214" y2="148"/></g></g>
+</g>
+<circle class="hd" cx="42" cy="132" r="15"/>
+<g class="g a"><path d="M232 130 v-40"/><path d="M226 92 l6 -10 6 10z" fill="#2e7d4f"/></g></svg>

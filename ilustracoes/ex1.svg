@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180"><style>
+.b{stroke:#1d2430;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.r{stroke:#e0662b;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.l{stroke:#3a6ea5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.f{stroke:#9aa7b5;stroke-width:3}
+.c{stroke:#6d5a44;stroke-width:6;stroke-linecap:round}
+.g{stroke:#2e7d4f;stroke-width:3;fill:none;stroke-linecap:round}
+.hd{fill:#1d2430}
+.pz{fill:#e53935}
+@media (prefers-reduced-motion:reduce){*{animation-play-state:paused!important;animation-delay:-3s!important}}
+.bel{transform-origin:110px 133px;animation:br 6s ease-in-out infinite}@keyframes br{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1.15)}}
+</style><line class="f" x1="0" y1="150" x2="320" y2="150"/>
+<line class="c" x1="168" y1="94" x2="258" y2="94"/><line class="c" x1="178" y1="94" x2="178" y2="150"/><line class="c" x1="250" y1="94" x2="250" y2="150"/><line class="c" x1="258" y1="94" x2="258" y2="42"/>
+<polyline class="l" stroke-width="14" points="156,136 158,86 230,86"/>
+<line class="b" stroke-width="24" x1="62" y1="136" x2="158" y2="137"/>
+<ellipse class="hd bel" cx="110" cy="127" rx="28" ry="5"/>
+<circle class="hd" cx="42" cy="128" r="15"/>
+<line class="b" stroke-width="10" x1="80" y1="140" x2="138" y2="144"/>
+<polyline class="r" stroke-width="14" points="160,137 163,82 236,82"/></svg>
