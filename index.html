@@ -115,6 +115,24 @@ th{background:#e7eef7}
 <div class="regra"><b>Chão ou cama firme</b>Colchão mole deixa a coluna afundar.</div>
 </div>
 
+<h2>Para sustentar os 30 segundos</h2>
+<div class="regras">
+<div class="regra"><b>Deixe parado sozinho</b>Músculo relaxado alonga melhor. Use a parede (exercício 2b), uma toalha atrás da coxa ou um travesseiro na cabeça.</div>
+<div class="regra"><b>Conte respirações</b>30 s são umas 5 respirações lentas: 3 s puxando o ar, 3 s soltando. Passa mais rápido que olhar o relógio.</div>
+<div class="regra"><b>Divida, se precisar</b>2 × 15 s com 5 s de descanso tem efeito parecido. Vá aumentando até chegar aos 30 s.</div>
+<div class="regra"><b>Solte o ar quando quiser desistir</b>O músculo cede justamente na expiração. Nos últimos 10 s, se estiver bom, vá um pouquinho mais.</div>
+</div>
+<h3 style="margin:1.2em 0 .4em">Com ajuda de outra pessoa</h3>
+<div class="box aviso" style="margin-top:0"><b>Regra principal: quem controla a força é você.</b> Quem ajuda <b>segura, não empurra</b>.
+<ul>
+<li>No exercício 2, quem ajuda apoia a sua coxa com as mãos, na altura que você pedir, e você relaxa.</li>
+<li>Combinem três palavras: <b>"mais"</b>, <b>"assim"</b> e <b>"solta"</b>. No "solta", a perna volta devagar, nunca de uma vez.</li>
+<li>Nunca empurrar o joelho para baixo nem forçar além do pedido. Com hérnia, um empurrão pode irritar o nervo.</li>
+<li>Quem ajuda pode cuidar do celular e reparar se você prende a respiração ou trava o rosto: sinal de que está forçando.</li>
+<li>Se a dor descer pela perna, soltar na hora e ir para a posição de descanso (exercício 1).</li>
+</ul>
+No modo guiado, aperte <b>👤 Sozinho</b> no alto para virar <b>👥 Com ajudante</b>: a voz passa a orientar também quem está ajudando.</div>
+
 <h2>Os exercícios</h2>
 <p class="leg">Nos desenhos: <b style="color:var(--dir)">laranja</b> = perna direita (lado da dor) · <b style="color:var(--esq)">azul</b> = perna esquerda · círculo vermelho = onde deve sentir o puxão. Marque cada um ao terminar; o celular lembra o que você já fez hoje.</p>
 <div class="grid" id="lista"></div>
@@ -146,13 +164,13 @@ th{background:#e7eef7}
 <button class="btn dor fab" id="btnDor">A dor desceu pela perna</button>
 
 <div class="player" id="player" aria-live="polite">
-  <div class="pl-top"><span class="pl-steps" id="plSteps"></span><span><button class="x" id="plMus">🎵 Música</button> <button class="x" id="plVoz">🔊 Voz ligada</button> <button class="x" id="plSair">Sair</button></span></div>
+  <div class="pl-top"><span class="pl-steps" id="plSteps"></span><span><button class="x" id="plAj">👤 Sozinho</button> <button class="x" id="plMus">🎵 Música</button> <button class="x" id="plVoz">🔊 Voz ligada</button> <button class="x" id="plSair">Sair</button></span></div>
   <div class="pl-main">
     <div class="pl-ilu" id="plIlu"></div>
     <p class="pl-nome" id="plNome"></p>
     <span class="pl-lado" id="plLado"></span>
     <div class="ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#ffffff22" stroke-width="8"/><circle id="plArc" cx="50" cy="50" r="44" fill="none" stroke="#4cc47f" stroke-width="8" stroke-linecap="round" stroke-dasharray="276.5" stroke-dashoffset="0"/></svg><div class="t"><b id="plTempo">0</b><small id="plSerie"></small></div></div>
-    <div class="pl-cue" id="plCue"></div>
+    <div class="pl-cue" id="plCue"></div><div id="plAjuda" style="display:none;background:#ffffff14;border-left:4px solid #7aa7d9;padding:8px 12px;border-radius:8px;max-width:520px;font-size:.98rem"></div>
   </div>
   <div class="pl-bot">
     <button class="btn sec" id="plVolta">◀ Voltar</button>
@@ -187,11 +205,13 @@ const EX=[
   passos:["Deitado de costas, joelhos dobrados, pés no chão.","Cruze o tornozelo direito sobre o joelho esquerdo (forma um \"4\").","Segure atrás da coxa esquerda e traga as pernas devagar em direção ao peito.","Cabeça e lombar ficam no chão. Sinta o puxão no glúteo direito."],
   nota:"O mais seguro para quem tem hérnia: a coluna fica apoiada e não dobra. Se não alcançar a coxa, use uma toalha.",
   fala:l=>`Cruze o tornozelo ${l} sobre o joelho ${op(l)}. Segure atrás da coxa e puxe devagar para o peito.`,
+  ajuda:{tela:"Ajudante: apoie a coxa de baixo com as mãos, na altura pedida. Segure, não empurre.",prep:"Ajudante: apoie a coxa com as mãos e suba só até onde for pedido.",hold:"Ajudante: segure firme, sem empurrar.",solta:"Ajudante: devolva a perna devagar."},
   plano:{tipo:"seg",anim:"segura",seg:30,series:3,lados:["esquerdo","direito"]}},
  {id:3,nome:"Joelho ao ombro oposto",tags:["piriforme"],dose:"30 s · 3 vezes · cada lado",
   passos:["Deitado de costas, perna esquerda esticada no chão.","Dobre o joelho direito e segure com as duas mãos.","Puxe o joelho na direção do ombro esquerdo (na diagonal), sem tirar o quadril do chão."],
   cuidado:"Se a dor descer pela perna, volte para o exercício 2, que é mais leve.",
   fala:l=>`Segure o joelho ${l} com as duas mãos e puxe na direção do ombro ${op(l)}.`,
+  ajuda:{tela:"Ajudante: coloque as mãos sobre o joelho e só acompanhe o movimento. Quem puxa é quem alonga.",prep:"Ajudante: mãos sobre o joelho, só acompanhe.",hold:"Ajudante: segure firme, sem forçar.",solta:"Ajudante: devolva a perna devagar."},
   plano:{tipo:"seg",anim:"segura",seg:30,series:3,lados:["esquerdo","direito"]}},
  {id:4,nome:"Extensão de bruços (esfinge)",tags:["hérnia","McKenzie"],dose:"1 min deitado reto, depois 1 a 2 min nos cotovelos",
   passos:["Deite de barriga para baixo por 1 minuto, braços ao lado do corpo.","Se a perna não piorar, apoie nos cotovelos e levante o peito.","Deixe a barriga e o quadril relaxados no chão."],
@@ -208,13 +228,21 @@ const EX=[
   passos:["Sentado, pés no chão. Cruze o tornozelo direito sobre o joelho esquerdo.","Com a mão, empurre o joelho de cima para baixo, de leve.","Coluna reta o tempo todo. Não curve as costas."],
   nota:"Bom para o meio do expediente, depois de muito tempo sentado ou dirigindo.",
   fala:l=>`Sentado, cruze o tornozelo ${l} sobre o joelho ${op(l)}. Coluna reta. Empurre o joelho de leve para baixo.`,
+  ajuda:{tela:"Ajudante: só observe se as costas estão retas. Não empurre o joelho.",hold:"Ajudante: confira se as costas estão retas."},
   plano:{tipo:"seg",anim:"segura",seg:30,series:3,lados:["esquerdo","direito"]}},
  {id:7,nome:"Ponte de glúteo",tags:["fortalecer","quando a dor baixar"],dose:"10 repetições · segura 3 s em cima · 2 séries",
   passos:["Deitado de costas, joelhos dobrados, pés no chão na largura do quadril.","Aperte o glúteo e suba o quadril até a linha joelho-ombro.","Desça devagar."],
   nota:"Glúteo forte protege a lombar. Comece quando a dor estiver em 4 de 10 ou menos.",
   fala:()=>"Deite de costas, joelhos dobrados, pés no chão. Siga o boneco.",
-  plano:{tipo:"rep",reps:10,series:2,lados:[null],fases:[["Sobe",2,"Sobe"],["Segura",3,"Segura"],["Desce devagar",2,"Desce"]]}}
+  plano:{tipo:"rep",reps:10,series:2,lados:[null],fases:[["Sobe",2,"Sobe"],["Segura",3,"Segura"],["Desce devagar",2,"Desce"]]}},
+ {id:8,num:"2b",nome:"Figura 4 na parede",tags:["mais fácil de sustentar","piriforme"],dose:"30 s · 3 vezes · cada lado",
+  passos:["Deite com o bumbum perto da parede e apoie o pé esquerdo nela, joelho dobrado.","Cruze o tornozelo direito sobre o joelho esquerdo.","A parede segura a perna: você só relaxa e respira.","Para alongar mais, chegue o bumbum um pouco mais perto da parede."],
+  nota:"Mesmo alongamento do 2, sem precisar segurar com os braços. Use quando cansar de sustentar os 30 segundos.",
+  fala:l=>`Pé ${op(l)} na parede. Cruze o tornozelo ${l} sobre o joelho ${op(l)}. Deixe a parede segurar e relaxe.`,
+  ajuda:{tela:"Ajudante: se for pedido, apoie de leve o joelho de cima. Nunca empurre.",hold:"Ajudante: só apoie se for pedido."},
+  plano:{tipo:"seg",anim:"segura",seg:30,series:3,lados:["esquerdo","direito"]}}
 ];
+const ORDEM=[1,2,8,3,4,5,6,7];
 const ROT=[
  {id:"manha",nome:"Manhã",ex:[1,2,3,4],obs:"Calor 10 min antes, se puder"},
  {id:"meio",nome:"Meio do dia",ex:[6,5],obs:"No trabalho, na cadeira"},
@@ -239,10 +267,10 @@ function minutos(ids){return Math.round(montar(ids).reduce((a,s)=>a+s.ms,0)/6000
 
 $("#rotinas").innerHTML=ROT.map(r=>`<div class="rot"><b>${r.nome}</b><small>${r.ex.join(" → ")} · cerca de ${minutos(r.ex)} min · ${r.obs}</small><button class="btn" data-rot="${r.id}">▶ Começar</button></div>`).join("");
 
-$("#lista").innerHTML=EX.map(e=>`<div class="card" id="card${e.id}">
+$("#lista").innerHTML=ORDEM.map(i=>EX[i-1]).map(e=>`<div class="card" id="card${e.id}">
 <div class="ilu"><img src="${img(e.id)}" alt="Ilustração animada: ${e.nome}" loading="lazy"></div>
 <div class="c"><div>${e.tags.map((t,i)=>`<span class="tag${e.p&&i===0?" p":""}">${t}</span>`).join("")}</div>
-<h3>${e.id}. ${e.nome}</h3><div class="dose">${e.dose}</div>
+<h3>${e.num||e.id}. ${e.nome}</h3><div class="dose">${e.dose}</div>
 <ol>${e.passos.map(p=>`<li>${p}</li>`).join("")}</ol>
 ${e.nota?`<p class="leg">${e.nota}</p>`:""}${e.cuidado?`<p class="cuidado">${e.cuidado}</p>`:""}
 <div class="acoes"><button class="btn sec" data-um="${e.id}">▶ Fazer guiado</button>
@@ -256,7 +284,8 @@ document.addEventListener("change",ev=>{const id=+ev.target.dataset.feito;if(!id
 
 /* ---------- som, voz, tela ---------- */
 let ac;function bip(f=880,d=.18,n=1){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();for(let i=0;i<n;i++){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);const t=ac.currentTime+i*(d+.08);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.3,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d+.02)}}catch(e){}if(navigator.vibrate)navigator.vibrate(n>1?[120,80,120]:100)}
-let voz=localStorage.getItem("guiaVoz")!=="0",vozPt=null;
+let voz=localStorage.getItem("guiaVoz")!=="0",vozPt=null,ajudante=localStorage.getItem("guiaAjuda")==="1";
+const aj=(e,k)=>ajudante&&e.ajuda&&e.ajuda[k]?" "+e.ajuda[k]:"";
 function acharVoz(){const vs=speechSynthesis.getVoices();vozPt=vs.find(v=>/pt-BR/i.test(v.lang)&&/google|luciana|francisca|natural/i.test(v.name))||vs.find(v=>/pt-BR/i.test(v.lang))||vs.find(v=>/^pt/i.test(v.lang))||null}
 if("speechSynthesis" in window){acharVoz();speechSynthesis.onvoiceschanged=acharVoz}
 function falar(t){if(!voz||!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="pt-BR";if(vozPt)u.voice=vozPt;u.rate=1;u.onstart=()=>musDuck(.04);u.onend=()=>musDuck(VOL);speechSynthesis.speak(u)}
@@ -280,6 +309,7 @@ function musAgenda(){const oit=60/76/2;while(mus.prox<ac.currentTime+.5){const s
  if(s%4===0){const o=ac.createOscillator(),e=ac.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(48,t+.18);e.gain.setValueAtTime(.22,t);e.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(e);e.connect(mus.g);o.start(t);o.stop(t+.3)}
  const arp=[0,1,2,1,2,0,1,2][s%8];if(s%2===0||Math.random()<.35)nota(hz(ch[arp]+12+(s%16>=8&&arp===2?12:0)),t,.5,"sine",s%2?.04:.07,.01);
  mus.prox+=oit;mus.passo++}}
+function pintarAj(){$("#plAj").textContent=ajudante?"👥 Com ajudante":"👤 Sozinho"}
 function pintarMus(){$("#plMus").textContent=mus.on?"🎵 Música":"🎵 Sem música"}
 let wake;async function manterTela(){try{wake=await navigator.wakeLock?.request("screen")}catch(e){}}
 
@@ -302,15 +332,15 @@ function fracao(st,el){const e=st.e;const fixo=e.id===4&&st.serie===1;
 
 /* ---------- player em tempo real ---------- */
 let fila=[],pos=0,el=0,rodando=false,ult=0,raf=0,seg=-1,falou={};
-function abrir(ids){fila=montar(ids);pos=0;$("#player").classList.add("on");document.body.style.overflow="hidden";manterTela();pintarVoz();pintarMus();musIniciar();
+function abrir(ids){fila=montar(ids);pos=0;$("#player").classList.add("on");document.body.style.overflow="hidden";manterTela();pintarVoz();pintarMus();pintarAj();musIniciar();
  bip(660,.05);falar("Vamos começar.");setTimeout(()=>entrar(),900)}
 function fechar(){rodando=false;clearInterval(raf);if("speechSynthesis" in window)speechSynthesis.cancel();musParar();$("#player").classList.remove("on");document.body.style.overflow="";try{wake&&wake.release()}catch(e){}}
 async function entrar(){clearInterval(raf);const st=fila[pos];if(!st){fim();return}el=0;seg=-1;falou={};await carregarIlu(st.e);rodando=true;$("#plPausa").textContent="Pausar";ult=performance.now();
  const e=st.e,l=st.lado;
  if(st.tipo==="prep"){bip(520,.15);
   let t;if(e.falaSerie)t=e.falaSerie[st.serie-1];else if(st.novo)t=`${e.nome}. ${l?"Lado "+l+". ":""}${e.fala(l)}`;else t=`Mais uma. Série ${st.serie}. Volte para a posição.`;
-  falar(t)}
- else{bip(880,.18,2);if(st.tipo==="hold")falar(e.plano.anim==="livre"?"Respire com a barriga. Puxe o ar.":(e.id===4&&st.serie===1)?"Fique assim, relaxado.":"Segure. Respire solto.")}
+  falar(t+aj(e,"prep"))}
+ else{bip(880,.18,2);if(st.tipo==="hold")falar(e.plano.anim==="livre"?"Respire com a barriga. Puxe o ar.":(e.id===4&&st.serie===1)?"Fique assim, relaxado.":"Segure. Respire solto."+aj(e,"hold"))}
  clearInterval(raf);raf=setInterval(()=>loop(performance.now()),80)}
 function loop(now){if(!$("#player").classList.contains("on")){clearInterval(raf);return}const st=fila[pos];if(!st){clearInterval(raf);return}
  if(rodando){el+=now-ult}ult=now;
@@ -321,13 +351,13 @@ function eventos(st){const r=st.ms-el,s=Math.ceil(r/1000),e=st.e;
  const uma=(k,f)=>{if(!falou[k]){falou[k]=1;f()}};
  if(st.tipo==="hold"){
   if(e.plano.anim==="livre"){const k=Math.floor(el/3000);if(el<45000)uma("r"+k,()=>falar(k%2?"Solte devagar.":"Puxe o ar."));if(r<4000)uma("fim",()=>falar("Muito bem. Pode descer as pernas devagar."))}
-  else{if(st.ms>=20000&&r<10000)uma("10",()=>falar("Dez segundos."));if(r<3000&&!(e.id===4&&st.serie===1))uma("solta",()=>falar("Solte devagar."))}}
+  else{if(st.ms>=20000&&r<10000)uma("10",()=>falar("Dez segundos."));if(r<3000&&!(e.id===4&&st.serie===1))uma("solta",()=>falar("Solte devagar."+aj(e,"solta")))}}
  if(st.tipo==="rep"){const c=ciclo(e),n=Math.floor(el/c);let t=el%c,i=0;for(const f of e.plano.fases){if(t<f[1]*1000)break;t-=f[1]*1000;i++}
   const f=e.plano.fases[Math.min(i,e.plano.fases.length-1)];uma("f"+n+"_"+i,()=>{falar(i===0?`${n+1}, ${f[2]}`:f[2]);if(i===0)bip(760,.06)})}
  if(st.tipo==="prep"&&r<1500&&!(e.id===4&&st.serie===1))uma("ja",()=>{})}
 function pintar(st){const e=st.e,p=e.plano,r=Math.max(0,st.ms-el),s=Math.ceil(r/1000);
  const lado=st.lado;const L=$("#plLado");L.style.display=lado?"":"none";L.className="pl-lado "+(lado||"");L.textContent=lado?"Lado "+lado:"";
- $("#plNome").textContent=`${e.id}. ${e.nome}`;
+ $("#plNome").textContent=`${e.num||e.id}. ${e.nome}`;const A=$("#plAjuda");A.style.display=ajudante&&e.ajuda?"":"none";A.textContent=e.ajuda?e.ajuda.tela:"";
  $("#plTempo").textContent=s;
  $("#plSerie").textContent=st.tipo==="prep"?"prepare-se":`série ${st.serie} de ${p.series}`;
  $("#plArc").setAttribute("stroke",st.tipo==="prep"?"#7aa7d9":"#4cc47f");
@@ -343,7 +373,7 @@ function fim(){rodando=false;setTimeout(musParar,4000);bip(990,.25,3);falar("Rot
 document.addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;
  if(b.dataset.rot){abrir(ROT.find(r=>r.id===b.dataset.rot).ex)}
  if(b.dataset.um){abrir([+b.dataset.um])}});
-$("#plSair").onclick=fechar;$("#plMus").onclick=()=>{mus.on=!mus.on;localStorage.setItem("guiaMus",mus.on?"1":"0");mus.on&&rodando?musIniciar():musParar();pintarMus()};
+$("#plSair").onclick=fechar;$("#plAj").onclick=()=>{ajudante=!ajudante;localStorage.setItem("guiaAjuda",ajudante?"1":"0");pintarAj();const st=fila[pos];if(st)pintar(st)};$("#plMus").onclick=()=>{mus.on=!mus.on;localStorage.setItem("guiaMus",mus.on?"1":"0");mus.on&&rodando?musIniciar():musParar();pintarMus()};
 $("#plVoz").onclick=()=>{voz=!voz;localStorage.setItem("guiaVoz",voz?"1":"0");if(!voz&&"speechSynthesis" in window)speechSynthesis.cancel();pintarVoz()};
 $("#plPausa").onclick=()=>{rodando=!rodando;rodando?musIniciar():musParar();$("#plPausa").textContent=rodando?"Pausar":"Continuar";if(!rodando&&"speechSynthesis" in window)speechSynthesis.cancel()};
 $("#plPula").onclick=()=>{pos++;entrar()};
