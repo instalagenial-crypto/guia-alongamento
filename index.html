@@ -56,7 +56,7 @@ th{background:#e7eef7}
 .player{position:fixed;inset:0;background:#10161f;color:#fff;z-index:50;display:none;flex-direction:column}
 .player.on{display:flex}
 .pl-top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;gap:10px}
-.pl-top .x{background:#ffffff22;color:#fff;padding:10px 14px}
+.pl-top .x{background:#ffffff22;color:#fff;padding:9px 11px;font-size:.88rem;margin-left:4px}.pl-top>span:last-child{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
 .pl-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;gap:10px;text-align:center;overflow:auto}
 .pl-ilu{width:min(100%,560px);background:#eef3f8;border-radius:14px;aspect-ratio:320/180;overflow:hidden}
 .pl-ilu img,.pl-ilu svg{width:100%;height:100%;object-fit:contain;display:block}
@@ -92,7 +92,7 @@ th{background:#e7eef7}
 <div class="box alerta"><b>Vá ao pronto-socorro hoje se aparecer:</b> perda de controle do xixi ou das fezes · dormência na região entre as pernas ou nas nádegas · fraqueza que piora (o pé "cai", não consegue andar na ponta do pé ou no calcanhar) · dor forte com febre ou depois de uma queda.</div>
 
 <h2>Fazer a rotina agora</h2>
-<p class="leg">Aperte uma rotina e o celular guia você em tempo real: o boneco faz o movimento junto com você, uma voz fala cada passo, o cronômetro conta o tempo e passa sozinho para o próximo. Deixe o volume ligado.</p>
+<p class="leg">Aperte uma rotina e o celular guia você em tempo real: o boneco faz o movimento junto com você, uma voz fala cada passo, uma música calma acompanha, o cronômetro conta o tempo e passa sozinho para o próximo. Deixe o volume ligado.</p>
 <div class="rotinas" id="rotinas"></div>
 <div style="margin-top:12px"><div class="prog"><i id="progDia"></i></div><p class="leg" id="progTxt" style="margin-top:4px"></p></div>
 
@@ -146,7 +146,7 @@ th{background:#e7eef7}
 <button class="btn dor fab" id="btnDor">A dor desceu pela perna</button>
 
 <div class="player" id="player" aria-live="polite">
-  <div class="pl-top"><span class="pl-steps" id="plSteps"></span><span><button class="x" id="plVoz">🔊 Voz ligada</button> <button class="x" id="plSair">Sair</button></span></div>
+  <div class="pl-top"><span class="pl-steps" id="plSteps"></span><span><button class="x" id="plMus">🎵 Música</button> <button class="x" id="plVoz">🔊 Voz ligada</button> <button class="x" id="plSair">Sair</button></span></div>
   <div class="pl-main">
     <div class="pl-ilu" id="plIlu"></div>
     <p class="pl-nome" id="plNome"></p>
@@ -259,8 +259,28 @@ let ac;function bip(f=880,d=.18,n=1){try{ac=ac||new (window.AudioContext||window
 let voz=localStorage.getItem("guiaVoz")!=="0",vozPt=null;
 function acharVoz(){const vs=speechSynthesis.getVoices();vozPt=vs.find(v=>/pt-BR/i.test(v.lang)&&/google|luciana|francisca|natural/i.test(v.name))||vs.find(v=>/pt-BR/i.test(v.lang))||vs.find(v=>/^pt/i.test(v.lang))||null}
 if("speechSynthesis" in window){acharVoz();speechSynthesis.onvoiceschanged=acharVoz}
-function falar(t){if(!voz||!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="pt-BR";if(vozPt)u.voice=vozPt;u.rate=1;speechSynthesis.speak(u)}
+function falar(t){if(!voz||!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="pt-BR";if(vozPt)u.voice=vozPt;u.rate=1;u.onstart=()=>musDuck(.04);u.onend=()=>musDuck(VOL);speechSynthesis.speak(u)}
 function pintarVoz(){$("#plVoz").textContent=voz?"🔊 Voz ligada":"🔇 Voz desligada"}
+/* ---------- música gerada (sem direito autoral) ---------- */
+const mus={on:localStorage.getItem("guiaMus")!=="0",tocando:false,prox:0,passo:0,timer:null,g:null,nos:[]};
+const CH=[[60,64,67],[57,60,64],[53,57,60],[55,59,62]],hz=m=>440*Math.pow(2,(m-69)/12),VOL=.16;
+function musIniciar(){if(!mus.on||mus.tocando)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();
+ const g=ac.createGain();g.gain.value=0;g.gain.linearRampToValueAtTime(VOL,ac.currentTime+2);
+ const dl=ac.createDelay();dl.delayTime.value=.39;const fb=ac.createGain();fb.gain.value=.28;const wet=ac.createGain();wet.gain.value=.22;
+ g.connect(ac.destination);g.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(ac.destination);
+ mus.g=g;mus.nos=[g,dl,fb,wet];mus.prox=ac.currentTime+.15;mus.passo=0;mus.tocando=true;mus.timer=setInterval(musAgenda,100)}catch(e){}}
+function musParar(){if(!mus.tocando)return;mus.tocando=false;clearInterval(mus.timer);const n=mus.nos;try{mus.g.gain.cancelScheduledValues(ac.currentTime);mus.g.gain.setValueAtTime(mus.g.gain.value,ac.currentTime);mus.g.gain.linearRampToValueAtTime(0,ac.currentTime+1)}catch(e){}setTimeout(()=>n.forEach(x=>{try{x.disconnect()}catch(e){}}),1500)}
+function musDuck(v){if(!mus.tocando)return;try{mus.g.gain.cancelScheduledValues(ac.currentTime);mus.g.gain.setValueAtTime(mus.g.gain.value,ac.currentTime);mus.g.gain.linearRampToValueAtTime(v,ac.currentTime+.3)}catch(e){}}
+function nota(f,t,dur,tipo,vol,ataque,corte){const o=ac.createOscillator(),e=ac.createGain();o.type=tipo;o.frequency.value=f;let s=o;
+ if(corte){const lp=ac.createBiquadFilter();lp.type="lowpass";lp.frequency.value=corte;o.connect(lp);s=lp}
+ s.connect(e);e.connect(mus.g);e.gain.setValueAtTime(.0001,t);e.gain.linearRampToValueAtTime(vol,t+ataque);e.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.05)}
+function musAgenda(){const oit=60/76/2;while(mus.prox<ac.currentTime+.5){const s=mus.passo,ch=CH[Math.floor(s/16)%4],t=mus.prox;
+ if(s%16===0)ch.forEach(m=>nota(hz(m),t,oit*16+.8,"triangle",.07,1.2,900));
+ if(s%8===0)nota(hz(ch[0]-12),t,oit*7,"sine",.22,.05);
+ if(s%4===0){const o=ac.createOscillator(),e=ac.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(48,t+.18);e.gain.setValueAtTime(.22,t);e.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(e);e.connect(mus.g);o.start(t);o.stop(t+.3)}
+ const arp=[0,1,2,1,2,0,1,2][s%8];if(s%2===0||Math.random()<.35)nota(hz(ch[arp]+12+(s%16>=8&&arp===2?12:0)),t,.5,"sine",s%2?.04:.07,.01);
+ mus.prox+=oit;mus.passo++}}
+function pintarMus(){$("#plMus").textContent=mus.on?"🎵 Música":"🎵 Sem música"}
 let wake;async function manterTela(){try{wake=await navigator.wakeLock?.request("screen")}catch(e){}}
 
 /* ---------- ilustração controlada ---------- */
@@ -282,9 +302,9 @@ function fracao(st,el){const e=st.e;const fixo=e.id===4&&st.serie===1;
 
 /* ---------- player em tempo real ---------- */
 let fila=[],pos=0,el=0,rodando=false,ult=0,raf=0,seg=-1,falou={};
-function abrir(ids){fila=montar(ids);pos=0;$("#player").classList.add("on");document.body.style.overflow="hidden";manterTela();pintarVoz();
+function abrir(ids){fila=montar(ids);pos=0;$("#player").classList.add("on");document.body.style.overflow="hidden";manterTela();pintarVoz();pintarMus();musIniciar();
  bip(660,.05);falar("Vamos começar.");setTimeout(()=>entrar(),900)}
-function fechar(){rodando=false;clearInterval(raf);if("speechSynthesis" in window)speechSynthesis.cancel();$("#player").classList.remove("on");document.body.style.overflow="";try{wake&&wake.release()}catch(e){}}
+function fechar(){rodando=false;clearInterval(raf);if("speechSynthesis" in window)speechSynthesis.cancel();musParar();$("#player").classList.remove("on");document.body.style.overflow="";try{wake&&wake.release()}catch(e){}}
 async function entrar(){clearInterval(raf);const st=fila[pos];if(!st){fim();return}el=0;seg=-1;falou={};await carregarIlu(st.e);rodando=true;$("#plPausa").textContent="Pausar";ult=performance.now();
  const e=st.e,l=st.lado;
  if(st.tipo==="prep"){bip(520,.15);
@@ -318,17 +338,17 @@ function pintar(st){const e=st.e,p=e.plano,r=Math.max(0,st.ms-el),s=Math.ceil(r/
  else{const c=ciclo(e),n=Math.min(p.reps,Math.floor(el/c)+1);let t=el%c,f=p.fases[0][0];for(const x of p.fases){if(t<x[1]*1000){f=x[0];break}t-=x[1]*1000}cue=`${n}/${p.reps} · ${f}`}
  $("#plCue").textContent=cue;
  const tot=fila.filter(x=>x.tipo!=="prep").length,at=fila.slice(0,pos+1).filter(x=>x.tipo!=="prep").length;$("#plSteps").textContent=`Passo ${Math.max(at,1)} de ${tot}`}
-function fim(){rodando=false;bip(990,.25,3);falar("Rotina concluída. Muito bem! Como está a perna?");$("#plNome").textContent="Rotina concluída 👏";$("#plCue").textContent="Como está a perna? Se piorou, use o botão vermelho.";$("#plTempo").textContent="✓";$("#plSerie").textContent="";$("#plLado").style.display="none";$("#plArc").style.strokeDashoffset=0}
+function fim(){rodando=false;setTimeout(musParar,4000);bip(990,.25,3);falar("Rotina concluída. Muito bem! Como está a perna?");$("#plNome").textContent="Rotina concluída 👏";$("#plCue").textContent="Como está a perna? Se piorou, use o botão vermelho.";$("#plTempo").textContent="✓";$("#plSerie").textContent="";$("#plLado").style.display="none";$("#plArc").style.strokeDashoffset=0}
 
 document.addEventListener("click",ev=>{const b=ev.target.closest("button");if(!b)return;
  if(b.dataset.rot){abrir(ROT.find(r=>r.id===b.dataset.rot).ex)}
  if(b.dataset.um){abrir([+b.dataset.um])}});
-$("#plSair").onclick=fechar;
+$("#plSair").onclick=fechar;$("#plMus").onclick=()=>{mus.on=!mus.on;localStorage.setItem("guiaMus",mus.on?"1":"0");mus.on&&rodando?musIniciar():musParar();pintarMus()};
 $("#plVoz").onclick=()=>{voz=!voz;localStorage.setItem("guiaVoz",voz?"1":"0");if(!voz&&"speechSynthesis" in window)speechSynthesis.cancel();pintarVoz()};
-$("#plPausa").onclick=()=>{rodando=!rodando;$("#plPausa").textContent=rodando?"Pausar":"Continuar";if(!rodando&&"speechSynthesis" in window)speechSynthesis.cancel()};
+$("#plPausa").onclick=()=>{rodando=!rodando;rodando?musIniciar():musParar();$("#plPausa").textContent=rodando?"Pausar":"Continuar";if(!rodando&&"speechSynthesis" in window)speechSynthesis.cancel()};
 $("#plPula").onclick=()=>{pos++;entrar()};
 $("#plVolta").onclick=()=>{pos=Math.max(0,pos-1);entrar()};
-const abrirDor=()=>{rodando=false;$("#plPausa").textContent="Continuar";if("speechSynthesis" in window)speechSynthesis.cancel();$("#modalDor").classList.add("on")};
+const abrirDor=()=>{rodando=false;musParar();$("#plPausa").textContent="Continuar";if("speechSynthesis" in window)speechSynthesis.cancel();$("#modalDor").classList.add("on")};
 $("#btnDor").onclick=abrirDor;$("#plDor").onclick=abrirDor;
 $("#fecharDor").onclick=()=>$("#modalDor").classList.remove("on");
 </script>
