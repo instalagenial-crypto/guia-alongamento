@@ -145,6 +145,20 @@ No modo guiado, aperte <b>👤 Sozinho</b> no alto para virar <b>👥 Com ajudan
 <p class="leg">Nos desenhos: <b style="color:var(--dir)">laranja</b> = perna direita (lado da dor) · <b style="color:var(--esq)">azul</b> = perna esquerda · círculo vermelho = onde deve sentir o puxão. Marque cada um ao terminar; o celular lembra o que você já fez hoje.</p>
 <div class="grid" id="lista"></div>
 
+<h2>Sentado sem dor</h2>
+<p class="leg">Sentado, a lombar dobra para a frente e a pressão no disco L5-S1 sobe. O disco aperta mais o nervo e a dor desce pela perna. Para você, ficar sentado <b>não é descanso</b>: descanso é deitado (1 ou 1b).</p>
+<div class="regras">
+<div class="regra"><b>Rolo na lombar</b>Toalha enrolada na altura do cinto, entre as costas e a cadeira. Mantém a curva da lombar.</div>
+<div class="regra"><b>Quadril acima dos joelhos</b>Almofada só embaixo do bumbum, ou almofada em cunha.</div>
+<div class="regra"><b>Encosto um pouco para trás</b>Cerca de 100 a 110 graus, com as costas apoiadas.</div>
+<div class="regra"><b>Pés no chão, peso igual</b>Sem cruzar as pernas, sem carteira no bolso de trás e sem pender o tronco para a direita.</div>
+<div class="regra"><b>No carro</b>O mesmo rolo na lombar e o banco mais perto do volante.</div>
+<div class="regra"><b>Alterne com em pé</b>Trabalhe em pé num balcão ou numa caixa sobre a mesa sempre que der.</div>
+</div>
+<div class="box aviso" id="lembrete"><b>Lembrete para levantar.</b> No máximo 25 minutos sentado. Depois, levante e ande 1 a 2 minutos.
+<div class="acoes"><button class="btn" id="levBtn">Ligar lembrete de 25 min</button></div>
+<p class="leg" id="levTxt" style="margin-top:6px">Funciona com esta página aberta. Se o celular bloquear a tela, pode atrasar; para ter certeza, use também o alarme do celular.</p></div>
+
 <h2>Evite enquanto a perna estiver doendo</h2>
 <div class="nao"><ul>
 <li>⛔ Tocar os pés com as pernas esticadas. Dobra o disco para a frente e empurra o disco contra o nervo.</li>
@@ -154,7 +168,7 @@ No modo guiado, aperte <b>👤 Sozinho</b> no alto para virar <b>👥 Com ajudan
 <li>⛔ Torção forte do tronco, com balanço.</li>
 <li>⛔ Puxar a perna direita esticada para cima com força.</li>
 <li>⛔ Pegar peso do chão com as costas curvadas. Dobre os joelhos e mantenha o peso junto ao corpo.</li>
-<li>⛔ Ficar mais de 40 min sentado direto. Levante e ande 2 minutos.</li>
+<li>⛔ Ficar mais de 25 min sentado direto. Levante e ande 1 a 2 minutos (use o lembrete acima).</li>
 <li>⛔ Carteira no bolso de trás da calça ao sentar.</li>
 </ul></div>
 <p class="leg" style="margin-top:10px">Para dormir: de preferência sobre o lado esquerdo (o lado da dor fica para cima), com um travesseiro entre os joelhos. Ou de costas, com travesseiro embaixo dos joelhos.</p>
@@ -201,6 +215,13 @@ No modo guiado, aperte <b>👤 Sozinho</b> no alto para virar <b>👥 Com ajudan
 </ol>
 <p class="cuidado"><b>Pronto-socorro na hora</b> se tiver perda de controle do xixi ou das fezes, dormência entre as pernas ou o pé fraco.</p>
 <button class="btn" id="fecharDor" style="width:100%;margin-top:10px">Entendi</button>
+</div></div>
+
+<div class="modal" id="modalLev"><div class="m">
+<h3>Hora de levantar</h3>
+<p>Já são 25 minutos sentado. Fique em pé e ande 1 a 2 minutos. Se a perna estiver doendo, deite 5 minutos na posição 1b ou 90/90.</p>
+<button class="btn" id="levDe" style="width:100%">Levantei: contar mais 25 min</button>
+<button class="btn sec" id="levDesl" style="width:100%;margin-top:8px">Desligar o lembrete</button>
 </div></div>
 
 <script>
@@ -397,6 +418,21 @@ $("#plVolta").onclick=()=>{pos=Math.max(0,pos-1);entrar()};
 const abrirDor=()=>{rodando=false;musParar();$("#plPausa").textContent="Continuar";if("speechSynthesis" in window)speechSynthesis.cancel();$("#modalDor").classList.add("on")};
 $("#btnDor").onclick=abrirDor;$("#plDor").onclick=abrirDor;
 $("#fecharDor").onclick=()=>$("#modalDor").classList.remove("on");
+const LEV=25*60000;let levIni=+localStorage.getItem("guiaLev")||0,levAvisou=false;
+function levPintar(){const b=$("#levBtn"),t=$("#levTxt");if(!levIni){b.textContent="Ligar lembrete de 25 min";b.className="btn";return}
+ const r=Math.max(0,LEV-(Date.now()-levIni)),m=Math.ceil(r/60000);b.textContent=`Lembrete ligado: ${m} min · desligar`;b.className="btn sec"}
+function levLigar(){levIni=Date.now();levAvisou=false;localStorage.setItem("guiaLev",levIni);levPintar();
+ if("Notification" in window&&Notification.permission==="default")Notification.requestPermission()}
+function levDesligar(){levIni=0;localStorage.removeItem("guiaLev");$("#modalLev").classList.remove("on");levPintar()}
+function levCheca(){if(!levIni)return;levPintar();if(levAvisou||Date.now()-levIni<LEV)return;levAvisou=true;
+ bip(660,.25,3);if(navigator.vibrate)navigator.vibrate([400,200,400,200,400]);
+ if(voz&&"speechSynthesis" in window){const u=new SpeechSynthesisUtterance("Hora de levantar. Ande um ou dois minutos.");u.lang="pt-BR";if(vozPt)u.voice=vozPt;speechSynthesis.speak(u)}
+ if("Notification" in window&&Notification.permission==="granted"){try{new Notification("Hora de levantar",{body:"25 minutos sentado. Ande 1 a 2 minutos."})}catch(_){}}
+ $("#modalLev").classList.add("on")}
+$("#levBtn").onclick=()=>levIni?levDesligar():levLigar();
+$("#levDe").onclick=()=>{$("#modalLev").classList.remove("on");levLigar()};
+$("#levDesl").onclick=levDesligar;
+setInterval(levCheca,15000);document.addEventListener("visibilitychange",levCheca);levPintar();levCheca();
 </script>
 </body>
 </html>
